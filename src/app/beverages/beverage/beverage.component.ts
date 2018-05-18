@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BeverageService } from '../beverage.service';
+import { BeverageService} from '../beverage.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -11,10 +11,18 @@ export class BeverageComponent implements OnInit {
 
   beverage: Object = {};
 
-  constructor() { }
+  constructor(
+private beverageService : BeverageService,
+private activatedRoute : ActivatedRoute
+  ) {
+    
+   }
 
   ngOnInit() {
-   
+    this.beverageService.getBeverageById(this.activatedRoute.snapshot.params['id'])
+    .then((resp) => {
+      this.beverage = resp;
+    });
   }
 
   updateBeverage(beverage: any) {
